@@ -1,0 +1,86 @@
+<style>
+input {
+    width: 43%;
+    height: 47px;
+    color: black;
+    background-color: rgb(103, 50, 11);
+}
+
+.buscador {
+    position: relative;
+    left: 20rem;
+    top: 1rem;
+    /*margin-left: 16rem;
+    margin-right: 8rem;*/
+}
+
+.msj{
+    text-align: center;
+}
+</style>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="buscador">
+            <!--con la funcion buscar se buscan los articulos del menu-->
+            <form action="/productos/buscar" class="d-flex px-40" role="search" method="post" id="buscador">
+                {{#if folio}}
+                <input type="hidden" value="{{folio}}" name="folio" id="folio">
+                {{/if}}
+                <input class="form-control me-2 w-50 " type="search" placeholder="Buscar" aria-label="Buscar" name="buscador">
+                <button class="btn btn-dark btn-lg hover-red" type="submit">Buscar</button>
+            </form>
+
+        </div>
+
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-12">
+            {{#if pers}}
+            <!--creacion de cabla-->
+            <table class="table">
+                <thead class="table-dark">
+                <!--color de la tabla-->
+                <tr>
+                    <!--secciones en el encabezado de la tabla-->
+                    <th class="w-80 py-4 fs-5 ...">Descripcion</th>
+                    <th class="w-20 py-4 px-2 fs-5 ...">Precio</th>
+                    <th class="w-20 py-4 px-2 fs-5 ...">Costo</th>
+                    <th class="w-10 py-4 px-5 fs-5 ...">Agregar</th>
+                </tr>
+                </thead>
+                <tbody>
+                    
+                {{#each pers}}
+                <tr>
+                    <!--obtiene la informacion de la base de datos y la imprime en la tabla--->
+                    <td class="p-3 fs-4">{{name}}</td>
+                    <td class="p-3 fs-4">{{precio}}</td>
+                    <td class="p-3 fs-4">{{costo}}</td>
+                    <td class="p-4 flex">
+                    <!--boton para eliminar producto con metodo delete-->
+                        <form action="/productos/agrega" method="POST" class="mx-2">
+                            <input type="hidden" value="{{id_producto}}" name="id_producto">
+                            <input type="hidden" value="{{folio}}" name="folio" id="folio">
+                            <button class="btn btn-success" type="submit" style="text-align: center;">+</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+            <br><br>
+            <div class="msj">
+                <h3>La busqueda no coincide con ningun producto</h3>
+            </div>
+            <br><br>
+            {{/if}}
+            </div>
+        </div>
+    </body>
+</html>
